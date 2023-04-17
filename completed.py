@@ -27,7 +27,11 @@ def main_textOnly():
         TextToSpeech_aeiou(text)
         print("Playing")
         playAudio_Pyaudio("output.wav")
-        print("\t\t\t\tDone")
+        print("Done")
+
+def play_song():
+    playAudio_Pyaudio("Main.wav")
 
 if __name__ == "__main__":
-    main_textOnly()
+    #main_textOnly()
+    play_song()
