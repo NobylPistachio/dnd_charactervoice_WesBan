@@ -32,6 +32,9 @@ def main_textOnly():
 def play_song():
     playAudio_Pyaudio("Main.wav")
 
+def self_song():
+    pass
+
 if __name__ == "__main__":
     #main_textOnly()
     play_song()

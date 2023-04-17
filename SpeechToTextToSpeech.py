@@ -12,7 +12,7 @@ from playsound import playsound
 
     #Record Audio
 def AudioSetup():
-    "I dont "
+    "I dont know what this is/does"
     #I dont know what this does, Investigate further
 
     # Set parameters for audio recording
