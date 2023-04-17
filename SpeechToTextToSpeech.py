@@ -5,13 +5,14 @@ import pygame
 import requests
 from playsound import playsound
 
+
 #Thanks to ChatGPT I was able to do this in LITERALLY 1 NIGHT, well almost
 #though this does bring up some concerns about the modules, I dont know what they do.
 
 
     #Record Audio
 def AudioSetup():
-
+    "I dont "
     #I dont know what this does, Investigate further
 
     # Set parameters for audio recording
@@ -35,16 +36,15 @@ def SpeechToText():
 
     # Listen to the audio from the microphone
     with sr.Microphone() as source:
-        print("Say something...")
+        print("Say something...", end=" ")
         #maybe I can make a button for this so it doesn't auto cut off
         audio = r.listen(source)
 
+    print("Done Recording.",end=" ")
+
     # Convert the audio to text
     text = r.recognize_google(audio)
-
     return text
-
-
 
     #Convert Text to Speech
 def TextToSpeech_Google(text,file_name = 'output.wav'):
@@ -81,7 +81,7 @@ def TextToSpeech_aeiou(text,file_name = 'output.wav'):
     with open(file_name, mode='bw') as f:
         f.write(response)
 
-
+    print("file made.", end=" ")
     #Play Audio (still looking for something to auto play the sound file)
 def PlayAudio_Pygame(file_name = 'output.wav'):
     'This takes a bit long but it works'
@@ -106,18 +106,6 @@ def PlayAudio_playsound(file_name = 'output.wav'):
     # Play the audio file
     playsound(file_name)
 
-def PlayAudio_():
-    #import sounddevice as sd
-    #import soundfile as sf
-
-    ## Load the audio file
-    #data, fs = sf.read("audiofile.wav", dtype='float32')
-
-    ## Play the audio file
-    #sd.play(data, fs)
-    #sd.wait()
-    pass
-
 
 def main():
     text = SpeechToText()
@@ -125,6 +113,11 @@ def main():
     TextToSpeech_aeiou(text)
     print("done")
     #PlayAudio_playsound()
+
+def tts_boi(text):
+    TextToSpeech_aeiou(text)
+    print("done")
+    pass
 
 #things to improve:
     #auto_PLayaudio
