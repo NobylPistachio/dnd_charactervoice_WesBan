@@ -4,10 +4,14 @@ import wave
 from SpeechToTextToSpeech import main as sttts
 from SpeechToTextToSpeech import tts_boi
 
+import threading
+from threading import Thread
+
+
 class AudioFile:
     chunk = 1024
 
-    def __init__(self, file):
+    def __init__(self, file, output):
         """ Init audio stream """ 
         self.wf = wave.open(file, 'rb')
 
@@ -24,7 +28,7 @@ class AudioFile:
         #8 Speakers / Headphones (Realtek
         #9 CABLE Input (VB-Audio Virtual C
 
-        self.output_device_id = 9
+        self.output_device_id = output
         self.input_device_id = 5
 
         self.p = pyaudio.PyAudio()
@@ -52,7 +56,14 @@ class AudioFile:
 def playAudio_Pyaudio(audio_file):
     # Usage example for pyaudio
     print(f"playing {audio_file}")
-    a = AudioFile(audio_file)
+    a = AudioFile(audio_file,9)
+    a.play()
+    a.close()
+    print("done playing")
+
+def playAudio_Pyaudio2(audio_file):
+    print(f"playing {audio_file}")
+    a = AudioFile(audio_file,7)
     a.play()
     a.close()
     print("done playing")
@@ -75,6 +86,11 @@ def put_test(inOut):
 def tts_b(text):
     tts_boi(text)
     playAudio_Pyaudio("output.wav")
+
+def tts_test(text):
+    tts_boi(text)
+    Thread(target=playAudio_Pyaudio("output.wav")).start()
+    Thread(target=playAudio_Pyaudio2("output.wav")).start()
 
 if __name__ == "__main__":
     while True:
