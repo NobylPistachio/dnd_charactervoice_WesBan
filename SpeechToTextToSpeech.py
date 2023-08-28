@@ -114,11 +114,14 @@ def main():
     print("done")
     #PlayAudio_playsound()
 
-def tts_boi(text):
+def tts_using_aeiou(text):
     TextToSpeech_aeiou(text)
     print("done")
     pass
 
+def tts_bot(text):
+    TextToSpeech_Google(text)
+    print("done")
 #things to improve:
     #auto_PLayaudio
     #route_audio to input

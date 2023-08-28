@@ -2,9 +2,9 @@ import pyaudio
 import wave
 
 from SpeechToTextToSpeech import main as sttts
-from SpeechToTextToSpeech import tts_boi
+from SpeechToTextToSpeech import tts_using_aeiou,tts_bot
 
-import threading
+
 from threading import Thread
 
 
@@ -53,44 +53,57 @@ class AudioFile:
         self.stream.close()
         self.p.terminate()
 
-def playAudio_Pyaudio(audio_file):
+def play_audio_to_them(audio_file_path,output=9):
     # Usage example for pyaudio
-    print(f"playing {audio_file}")
-    a = AudioFile(audio_file,9)
+    print(f"playing {audio_file_path} for them")
+    a = AudioFile(audio_file_path,output)
     a.play()
     a.close()
-    print("done playing")
+    print("done playing for them")
 
-def playAudio_Pyaudio2(audio_file):
-    print(f"playing {audio_file}")
-    a = AudioFile(audio_file,7)
+def play_audio_to_headphones(audio_file_path):
+        # Usage example for pyaudio
+    print(f"playing {audio_file_path} for me")
+    a = AudioFile(audio_file_path,7)
     a.play()
     a.close()
-    print("done playing")
+    print("done playing for me")
+
 
 def main():
     sttts()
-    playAudio_Pyaudio("output.wav")
+    play_audio_to_them("output.wav")
 
 
-def put_test(inOut):
-
+def put_test(inOut, printInfo:bool=True) -> list:
+    "inOut can take 'In' or 'Out'"
     p = pyaudio.PyAudio()
     info = p.get_host_api_info_by_index(0)
     numdevices = info.get('deviceCount')
+    devices = []
+    if printInfo:
+        for i in range(numdevices):
+            if (p.get_device_info_by_host_api_device_index(0, i).get(f'max{inOut}putChannels')) > 0:
+                print(f"{inOut}put Device id ", i, " - ", p.get_device_info_by_host_api_device_index(0, i),"\n")
 
-    for i in range(0, numdevices):
-        if (p.get_device_info_by_host_api_device_index(0, i).get(f'max{inOut}putChannels')) > 0:
-            print(f"{inOut}put Device id ", i, " - ", p.get_device_info_by_host_api_device_index(0, i),"\n")
+    return 
+
+def give_IO():
+    ...
+
 
 def tts_b(text):
-    tts_boi(text)
-    playAudio_Pyaudio("output.wav")
+    tts_using_aeiou(text)
+    play_audio_to_headphones("output.wav")
+
+def tts_a(text):
+    tts_bot(text)
+    play_audio_to_them("output.wav")
 
 def tts_test(text):
-    tts_boi(text)
-    Thread(target=playAudio_Pyaudio("output.wav")).start()
-    Thread(target=playAudio_Pyaudio2("output.wav")).start()
+    tts_using_aeiou(text)
+    Thread(target=play_audio_to_them("output.wav")).start()
+    Thread(target=play_audio_to_headphones("output.wav")).start()
 
 if __name__ == "__main__":
     while True:
